@@ -1,5 +1,5 @@
-const express = require("express");
-const {engine} = require("express-handlebars");
+import express from "express";
+import {engine} from "express-handlebars";
 const port = 3000;
 const app = express();
 
