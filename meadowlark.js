@@ -1,17 +1,12 @@
 import express from "express";
 import {engine} from "express-handlebars";
 import {URL} from "url";
+import getFortune from "./lib/fortune.js";
 const port = 3000;
 const __dirname = new URL(".", import.meta.url).pathname;
 const app = express();
 
-const fortunes = [
-    "Man, everything is going to be fine",
-    "GO LIFT",
-    "LIIIIIFT",
-    "CARDIO",
-    "After each fall there is a подъём"
-]
+
 
 app.engine("handlebars", engine({
     defaultLayout: "main"
@@ -24,7 +19,7 @@ app.use(express.static("public"));
 app.get("/", (req, res) => res.render("home"));
 
 app.get("/about", (req, res) => {
-    const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+    const randomFortune = getFortune();
     res.render("about", {fortune: randomFortune});
 });
 
