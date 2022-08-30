@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Educational project",
   "main": "meadowlark.js",
-  "type": "module",
   "scripts": {
     "test": "jest",
+    "continiousTest": "jest --watch",
     "start": "nodemon -e handlebars,html,js meadowlark.js"
   },
   "author": "Ivan Kurikhin <kurikhin.ivan@yandex.ru>",
