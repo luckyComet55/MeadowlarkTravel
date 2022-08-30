@@ -5,7 +5,7 @@
   "main": "meadowlark.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "nodemon -e handlebars,html,js meadowlark.js"
   },
   "author": "Ivan Kurikhin <kurikhin.ivan@yandex.ru>",
@@ -13,5 +13,8 @@
   "dependencies": {
     "express": "^4.18.1",
     "express-handlebars": "^6.0.6"
+  },
+  "devDependencies": {
+    "jest": "^29.0.1"
   }
 }
