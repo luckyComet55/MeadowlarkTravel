@@ -1,0 +1,56 @@
+<h2>Fill the form to sign up on our news</h2>
+<div id="newsletterSignUpFormContainer">
+    <form class="form-horizontal" role="form" id="newsletterSignUpForm">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
+        <div class="form-group">
+            <label for="fieldName" class="col-sm2 control-label">Name</label>
+            <div class="col-sm4">
+                <input type="text" class="form-control" id="fieldName" name="name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="fieldEmail" class="col-sm2 control-label">Email</label>
+            <div class="col-sm4">
+                <input type="text" class="form-control" required id="fieldEmail" name="email">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm4">
+                <button type="submit" class="btn btn-default">
+                    Sign up
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{{#section "script"}}
+<script>
+    document.querySelector("#newsletterSignUpForm")
+        .addEventListener("submit", event => {
+            event.preventDefault();
+            const form = event.target;
+            const body = JSON.stringify({
+                _csrf: form.elements._csrf.value,
+                name: form.elements.name.value,
+                email: form.elements.email.value
+            });
+            const headers = {"Content-type": "application/json"};
+            const container = document.querySelector("#newsletterSignUpFormContainer");
+            fetch("/api/newsletter-signup", {method: "post", body, headers})
+                .then(res => {
+                    if (res.status < 200 || res.status >= 300)
+                        throw new Error(`Query rejected with status code ${res.status}`);
+                    return res.json()
+                    })
+                .then(json => {
+                    container.innerHTML = "<b>Thanks for signing up!</b>";
+                })
+                .catch(err => {
+                    console.log(err);
+                    container.innerHTML = "<b>Problems occurred, try" +
+                            "signing up <a href='/newsletter'>again</a></b>";
+                })
+        })
+</script>
+{{/section}}
