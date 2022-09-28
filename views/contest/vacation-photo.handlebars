@@ -1,0 +1,60 @@
+<h2>Vacation photo concurs!</h2>
+
+<div id="vacationPhotoUploadContainer">
+    <form class="form-horizontal" role="form"
+          enctype="multipart/form-data" id="vacationPhotoUploadForm">
+        <input type="hidden" name="_csrf" value="{{_csrf}}">
+        <div class="form-group">
+            <label for="fieldMail" class="col-sm-2 control-label">
+                Email address
+            </label>
+            <div class="col-sm-4">
+                <input type="email" class="form-control"
+                required id="fieldMail" name="email">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="fieldPhoto" class="col-sm-2 control-label">
+                Vacation photo
+            </label>
+            <div class="col-sm-4">
+                <input type="file" class="form-control" required accept="image/*"
+                id="fieldPhoto" name="photo">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-4">
+                <button type="submit" class="btn btn-primary">
+                    Send
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{{#section "script"}}
+    <script>
+        document.querySelector("#vacationPhotoUploadForm")
+            .addEventListener("submit", event => {
+                event.preventDefault();
+                const body = new FormData(event.target);
+                const container = document.querySelector("#vacationPhotoUploadContainer");
+                const url = "/api/vacation-photo-contest/{{year}}/{{month}}";
+                console.log(url);
+                fetch(url, { method: "post", body })
+                    .then(res => {
+                        if(res.status < 200 || res.status >= 300)
+                            throw new Error(`Something went terribly wrong with status code ${res.status}`);
+                        return res.json();
+                    })
+                    .then(json => {
+                        container.innerHTML = "<b>Thanks for uploading your photo!</b>"
+                    })
+                    .catch(err => {
+                        console.info(err);
+                        container.innerHTML = "<b>Something went wrong while processing " +
+                                "your photo, you can try again <a href='/contest/vacation-photo-contest/{{year}}/{{month}}'>here</a></b>"
+                    })
+            })
+    </script>
+{{/section}}

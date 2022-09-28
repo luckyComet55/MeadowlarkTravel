@@ -3,6 +3,7 @@ const {engine} = require("express-handlebars");
 const handlers = require("./lib/handlers.js");
 const weatherMiddleware = require("./lib/middleware/weather");
 const body_parser = require("body-parser");
+const multiparty = require("multiparty");
 const port = 3000;
 const app = express();
 
@@ -26,13 +27,12 @@ app.use(body_parser.urlencoded({ extended: true }));
 app.use(body_parser.json());
 
 app.get("/", handlers.home);
-
 app.get("/about", handlers.about);
-
 app.get("/test", handlers.test);
-
 app.get("/newsletter", handlers.newsletter);
 app.post("/api/newsletter-signup", handlers.api.newsletterSignup);
+app.get("/contest/vacation-photo/:year/:month", handlers.vacationPhotoContest);
+app.post("/api/vacation-photo-contest/:year/:month", handlers.api.vacationPhotoContestApi);
 
 app.use(handlers.notFound);
 

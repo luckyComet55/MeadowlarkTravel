@@ -37,7 +37,8 @@
             });
             const headers = {"Content-type": "application/json"};
             const container = document.querySelector("#newsletterSignUpFormContainer");
-            fetch("/api/newsletter-signup", {method: "post", body, headers})
+            const url = "/api/newsletter-signup";
+            fetch(url, {method: "post", body, headers})
                 .then(res => {
                     if (res.status < 200 || res.status >= 300)
                         throw new Error(`Query rejected with status code ${res.status}`);
