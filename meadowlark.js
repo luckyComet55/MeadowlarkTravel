@@ -4,6 +4,10 @@ const handlers = require("./lib/handlers.js");
 const weatherMiddleware = require("./lib/middleware/weather");
 const body_parser = require("body-parser");
 const multiparty = require("multiparty");
+const flashMiddleware = require("./lib/middleware/flash");
+const cookieParser = require("cookie-parser");
+const expressSession = require("express-session");
+const {credentials} = require("./config");
 const port = 3000;
 const app = express();
 
@@ -25,6 +29,13 @@ app.use(express.static("public"));
 app.use(weatherMiddleware);
 app.use(body_parser.urlencoded({ extended: true }));
 app.use(body_parser.json());
+app.use(cookieParser(credentials.cookieSecret));
+app.use(expressSession({
+    resave: false,
+    saveUninitialized: false,
+    secret: credentials.cookieSecret
+}))
+app.use(flashMiddleware);
 
 app.get("/", handlers.home);
 app.get("/about", handlers.about);
