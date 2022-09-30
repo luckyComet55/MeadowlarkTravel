@@ -40,7 +40,6 @@
                 const body = new FormData(event.target);
                 const container = document.querySelector("#vacationPhotoUploadContainer");
                 const url = "/api/vacation-photo-contest/{{year}}/{{month}}";
-                console.log(url);
                 fetch(url, { method: "post", body })
                     .then(res => {
                         if(res.status < 200 || res.status >= 300)

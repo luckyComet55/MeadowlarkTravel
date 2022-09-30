@@ -29,16 +29,10 @@
     document.querySelector("#newsletterSignUpForm")
         .addEventListener("submit", event => {
             event.preventDefault();
-            const form = event.target;
-            const body = JSON.stringify({
-                _csrf: form.elements._csrf.value,
-                name: form.elements.name.value,
-                email: form.elements.email.value
-            });
-            const headers = {"Content-type": "application/json"};
+            const body = new FormData(event.target);
             const container = document.querySelector("#newsletterSignUpFormContainer");
             const url = "/api/newsletter-signup";
-            fetch(url, {method: "post", body, headers})
+            fetch(url, {method: "post", body})
                 .then(res => {
                     if (res.status < 200 || res.status >= 300)
                         throw new Error(`Query rejected with status code ${res.status}`);
