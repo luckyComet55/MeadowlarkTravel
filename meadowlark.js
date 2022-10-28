@@ -2,7 +2,7 @@ const express = require("express");
 const {engine} = require("express-handlebars");
 const handlers = require("./lib/handlers.js");
 const weatherMiddleware = require("./lib/middleware/weather");
-const body_parser = require("body-parser");
+const bodyParser = require("body-parser");
 const multiparty = require("multiparty");
 const flashMiddleware = require("./lib/middleware/flash");
 const cookieParser = require("cookie-parser");
@@ -27,8 +27,8 @@ app.set("view engine", "handlebars");
 
 app.use(express.static("public"));
 app.use(weatherMiddleware);
-app.use(body_parser.urlencoded({ extended: true }));
-app.use(body_parser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cookieParser(credentials.cookieSecret));
 app.use(expressSession({
     resave: false,
