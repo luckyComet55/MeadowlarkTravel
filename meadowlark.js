@@ -8,6 +8,7 @@ const flashMiddleware = require("./lib/middleware/flash");
 const cookieParser = require("cookie-parser");
 const expressSession = require("express-session");
 const {credentials} = require("./config");
+require("./db");
 const port = 3000;
 const app = express();
 
@@ -44,6 +45,9 @@ app.get("/newsletter", handlers.newsletter);
 app.post("/api/newsletter-signup", handlers.api.newsletterSignup);
 app.get("/contest/vacation-photo/:year/:month", handlers.vacationPhotoContest);
 app.post("/api/vacation-photo-contest/:year/:month", handlers.api.vacationPhotoContestApi);
+app.get("/vacations", handlers.listVacations);
+app.get("/notify-when-in-season", handlers.notifyTrip);
+app.post("/trip-notify", handlers.notifyTripProcess);
 
 app.use(handlers.notFound);
 
