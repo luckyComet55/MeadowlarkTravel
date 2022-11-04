@@ -7,6 +7,7 @@ const multiparty = require("multiparty");
 const flashMiddleware = require("./lib/middleware/flash");
 const cookieParser = require("cookie-parser");
 const expressSession = require("express-session");
+const routes = require("./routes");
 const {credentials} = require("./config");
 require("./db");
 const port = 3000;
@@ -38,16 +39,7 @@ app.use(expressSession({
 }))
 app.use(flashMiddleware);
 
-app.get("/", handlers.home);
-app.get("/about", handlers.about);
-app.get("/test", handlers.test);
-app.get("/newsletter", handlers.newsletter);
-app.post("/api/newsletter-signup", handlers.api.newsletterSignup);
-app.get("/contest/vacation-photo/:year/:month", handlers.vacationPhotoContest);
-app.post("/api/vacation-photo-contest/:year/:month", handlers.api.vacationPhotoContestApi);
-app.get("/vacations", handlers.listVacations);
-app.get("/notify-when-in-season", handlers.notifyTrip);
-app.post("/trip-notify", handlers.notifyTripProcess);
+routes(app);
 
 app.use(handlers.notFound);
 
